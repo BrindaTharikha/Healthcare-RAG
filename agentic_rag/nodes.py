@@ -2,6 +2,9 @@ from .guardrails import check_safety, route
 from .state import AgentState
 from .retrieval import retrieve
 
+from .llm_safety import classify_safety
+from .state import AgentState
+
 _DECLINE_MESSAGES = {
     "decline_personal_medical": "I can share general health education information, but I'm not able to give a personal diagnosis or treatment advice. Please talk to your doctor.",
     "decline_emergency": "This sounds like it could be a medical emergency. Please call 911 or your local emergency number right away.",
@@ -9,7 +12,7 @@ _DECLINE_MESSAGES = {
 
 
 def safety_check_node(state: AgentState) -> dict:
-    verdict = check_safety(state.question)
+    verdict = classify_safety(state.question)
 
     if verdict == "allow":
         return {"safety_verdict": verdict}
